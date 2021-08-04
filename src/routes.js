@@ -10,7 +10,7 @@ const Routes = [
     {
         path: "/sevenwonders",
         name: '7 Wonders',
-        main: () => <SevenWondersHome />
+        main: () => <SevenWondersHome/>
     },
     {
         path: "/shoelaces",

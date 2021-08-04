@@ -1,4 +1,3 @@
-
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Routes from "../routes";
@@ -8,7 +7,7 @@ export default function AppNavbar() {
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
                 <Navbar.Brand>Game Scores</Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         {
@@ -18,11 +17,11 @@ export default function AppNavbar() {
                                         {route.name}
                                     </Nav.Link>
                                 )
-                            })
+                            },)
                         }
                     </Nav>
                 </Navbar.Collapse>
             </Container>
-        </Navbar >
+        </Navbar>
     )
 }
