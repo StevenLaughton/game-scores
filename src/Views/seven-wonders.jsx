@@ -7,6 +7,9 @@ import { boardService } from "../Services/board.service";
 import ScoreTable from "../Components/score-table";
 import Player from "../Models/player.model";
 import { scoreService } from "../Services/score.service";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
+import CardBuilder from "../Components/card-builder";
 
 export default class SevenWonders extends React.Component {
     constructor(props) {
@@ -16,6 +19,7 @@ export default class SevenWonders extends React.Component {
                 new Player('steven'),
                 new Player('charlotte'),
             ],
+            modalOpen: false
         };
     }
 
@@ -43,6 +47,11 @@ export default class SevenWonders extends React.Component {
         this.setState({players: players});
     };
 
+    openModal = () => {
+        console.log('open')
+        this.setState(state => update(state, {modalOpen: {$set: !state.modalOpen}}))
+    }
+
     render() {
         return (
             <div>
@@ -54,24 +63,27 @@ export default class SevenWonders extends React.Component {
                         </Button>
                     </div>
                     <Row>
-                        {this.state.players.map((player, index) => {
-                            return (
-                                <Col xs={12} sm={6} key={index}>
-                                    <PlayerCard player={player}
-                                                index={index}
-                                                removeHandler={this.removePlayer}
-                                                addHandler={this.addPlayerScore}>
-                                        {player.board && <ScoreTable board={player.board}/>}
-                                    </PlayerCard>
-                                </Col>
-                            )
-                        })
+                        {
+                            this.state.players.map((player, index) => {
+                                return (
+                                    <Col xs={12} sm={6} key={index}>
+                                        <FontAwesomeIcon icon={faPlus} className="mx-2" onClick={this.openModal}/>
+                                        <PlayerCard player={player}
+                                                    index={index}
+                                                    removeHandler={this.removePlayer}
+                                                    addHandler={this.addPlayerScore}>
+                                            {player.board && <ScoreTable board={player.board}/>}
+                                        </PlayerCard>
+                                    </Col>
+                                )
+                            })
                         }
                         <Col xs={12} md={6}>
                             <AddPlayerCard onClick={this.addPlayer}/>
                         </Col>
                     </Row>
                 </Container>
+                <CardBuilder show={this.state.modalOpen} handleClose={this.openModal}/>
             </div>
         )
     }
