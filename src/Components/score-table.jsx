@@ -1,15 +1,15 @@
 import { Accordion, Badge, Table } from "react-bootstrap";
+import { CardWithQuantity } from "../Models/card-with-quantity.model";
 
 export default function ScoreTable(props) {
-
     return (
         <Accordion>
             {
-                Object.keys(props.score).map((key, index) => {
+                [...props.board.keys()].map((key, index) => {
                     return (
                         <Accordion.Item eventKey={index} key={index}>
                             <Accordion.Header>{key}
-                                <Badge bg="success" className="mx-2" pill> {props.score[key].points}</Badge>
+                                <Badge bg="success" className="mx-2" pill> {props.board.get(key).points}</Badge>
                             </Accordion.Header>
                             <Accordion.Body>
                                 <Table responsive striped>
@@ -21,10 +21,10 @@ export default function ScoreTable(props) {
                                     </thead>
                                     <tbody>
                                     {
-                                        props.score[key].cards.map((card, index) => {
+                                        props.board.get(key).cards.map((card: CardWithQuantity, index: number) => {
                                             return (
                                                 <tr key={index}>
-                                                    <td>{card.item}</td>
+                                                    <td>{card.item.name}</td>
                                                     <td>{card.quantity}</td>
                                                 </tr>
                                             )

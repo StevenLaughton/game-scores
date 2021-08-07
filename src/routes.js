@@ -1,4 +1,4 @@
-import SevenWondersHome from "./Views/SevenWonders/Index";
+import SevenWonders from "./Views/seven-wonders";
 
 const Routes = [
     {
@@ -10,7 +10,7 @@ const Routes = [
     {
         path: "/sevenwonders",
         name: '7 Wonders',
-        main: () => <SevenWondersHome/>
+        main: () => <SevenWonders/>
     },
     {
         path: "/shoelaces",
