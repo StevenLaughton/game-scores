@@ -1,9 +1,8 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, CloseButton, Col, Container, Row } from "react-bootstrap";
 import PlayerCard from "../Components/player-card";
 import AddPlayerCard from "../Components/add-player-card";
 import React from "react";
 import update from 'immutability-helper';
-import { boardService } from "../Services/board.service";
 import ScoreTable from "../Components/score-table";
 import Player from "../Models/player.model";
 import { scoreService } from "../Services/score.service";
@@ -19,7 +18,8 @@ export default class SevenWonders extends React.Component {
                 new Player('steven'),
                 new Player('charlotte'),
             ],
-            modalOpen: false
+            modalOpen: false,
+            modalPlayer: null
         };
     }
 
@@ -32,10 +32,10 @@ export default class SevenWonders extends React.Component {
         }
     }
 
-    addPlayerScore = (index) => {
-        const players = [...this.state.players];
-        players[index] = update(players[index], {$merge: {board: boardService.get()}});
-        this.setState({players: players});
+    updatePlayer = (player, index) => {
+        const statePlayers = this.state.players;
+        statePlayers[index] = player;
+        this.setState({players: statePlayers});
     }
 
     removePlayer = (index) => {
@@ -47,9 +47,17 @@ export default class SevenWonders extends React.Component {
         this.setState({players: players});
     };
 
-    openModal = () => {
-        console.log('open')
-        this.setState(state => update(state, {modalOpen: {$set: !state.modalOpen}}))
+    openModal = (player: Player) => {
+        this.setState({modalOpen: true, modalPlayer: player})
+    }
+
+    handleModalClose = () => {
+        this.setState({modalOpen: false, modalPlayer: null})
+    }
+
+    handleModalSave = (player, index) => {
+        this.updatePlayer(player, index);
+        this.handleModalClose();
     }
 
     render() {
@@ -67,11 +75,14 @@ export default class SevenWonders extends React.Component {
                             this.state.players.map((player, index) => {
                                 return (
                                     <Col xs={12} sm={6} key={index}>
-                                        <FontAwesomeIcon icon={faPlus} className="mx-2" onClick={this.openModal}/>
                                         <PlayerCard player={player}
                                                     index={index}
-                                                    removeHandler={this.removePlayer}
-                                                    addHandler={this.addPlayerScore}>
+                                                    slotLeft={
+                                                        <FontAwesomeIcon icon={faPlus}
+                                                                         onClick={() => this.openModal(player)}/>
+                                                    }
+                                                    slotRight={<CloseButton onClick={() => this.removePlayer(index)}/>}
+                                                    updateHandler={this.updatePlayer.bind(this)}>
                                             {player.board && <ScoreTable board={player.board}/>}
                                         </PlayerCard>
                                     </Col>
@@ -83,7 +94,11 @@ export default class SevenWonders extends React.Component {
                         </Col>
                     </Row>
                 </Container>
-                <CardBuilder show={this.state.modalOpen} handleClose={this.openModal}/>
+                {
+                    this.state.modalPlayer && <CardBuilder show={this.state.modalOpen}
+                                                           handleClose={this.handleModalClose}
+                                                           handleSave={this.handleModalSave}
+                                                           player={this.state.modalPlayer}/>}
             </div>
         )
     }
