@@ -17,7 +17,7 @@ export class Gold implements Card {
 }
 
 export default function getMoneyMap(board) {
-    board.set('science', {
+    board.set('money', {
         points: 0,
         cards: [
             {

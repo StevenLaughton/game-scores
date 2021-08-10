@@ -18,7 +18,7 @@ export class BattleLosses implements Card {
 
 
 export default function getMilitaryMap(board) {
-    board.set('science', {
+    board.set('military', {
         points: 0,
         cards: [
             {
