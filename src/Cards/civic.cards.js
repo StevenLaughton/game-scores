@@ -1,5 +1,4 @@
 import { Card } from "../Models/card.model";
-import { WorkersGuild } from "./guild.cards";
 
 export class TwoPoint implements Card {
     name = 'Two Victory Points';

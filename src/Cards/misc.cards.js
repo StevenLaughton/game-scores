@@ -26,7 +26,7 @@ export class Red implements Card {
     }
 }
 
-export default function getCommerceMap(board) {
+export default function getMiscMap(board) {
     board.set('misc', {
         points: 0,
         cards: [

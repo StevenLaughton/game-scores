@@ -1,7 +1,7 @@
 import { Card } from "../Models/card.model";
 
 export class Tablet implements Card {
-    name = 'Scriptorium';
+    name = 'Tablet';
 
     action() {
         return 1;
@@ -9,7 +9,7 @@ export class Tablet implements Card {
 }
 
 export class Cog implements Card {
-    name = 'Workshop';
+    name = 'Cog';
 
     action() {
         return 1;
@@ -17,7 +17,7 @@ export class Cog implements Card {
 }
 
 export class Compass implements Card {
-    name = 'Apothecary';
+    name = 'Compass';
 
     action() {
         return 1;

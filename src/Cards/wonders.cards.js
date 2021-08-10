@@ -1,49 +1,67 @@
 import { Card } from "../Models/card.model";
 
-export class GizaPhaseOne implements Card {
-    name = 'Giza Phase 1';
+export class APhaseOne implements Card {
+    constructor(wonder: wonders) {
+        this.name = `${wonder} Phase One`
+    }
 
     action() {
-        return 1;
+        return 3;
     };
 }
 
-export class GizaPhaseTwo implements Card {
-    name = 'Giza Phase 2';
+export class APhaseTwo implements Card {
+    constructor(wonder: wonders) {
+        this.name = `${wonder} Phase Two`
+    }
 
     action() {
-        return 1;
+        return 0;
     };
 }
 
-export class GizaPhaseThree implements Card {
-    name = 'Giza Phase 3';
+export class APhaseThree implements Card {
+    constructor(wonder: wonders) {
+        this.name = `${wonder} Phase Three`
+    }
 
     action() {
-        return 1;
+        return 7;
     };
 }
 
-export class AlexandraPhaseOne implements Card {
-    name = 'Phase 1';
-
-    action() {
-        return 1;
-    };
+export default function getWonderMap(board, wonder) {
+    board.set('wonders', {
+        points: 0,
+        cards: [
+            {
+                item: new APhaseOne(wonder),
+                quantity: 0,
+            },
+            {
+                item: new APhaseTwo(wonder),
+                quantity: 0,
+            },
+            {
+                item: new APhaseThree(wonder),
+                quantity: 0,
+            },
+        ]
+    });
+    return board;
 }
 
-export class AlexandraPhaseTwo implements Card {
-    name = 'Phase 2';
-
-    action() {
-        return 1;
-    };
+export const wonders = {
+    Rhodes: 'Rhodes',
+    Alexandria: 'Alexandria',
+    Ephesus: 'Ephesus',
+    Babylon: 'Babylon',
+    Olympia: 'Olympia',
+    Halicarnassus: 'Halicarnassus',
+    Giza: 'Giza',
 }
 
-export class AlexandraPhaseThree implements Card {
-    name = 'Phase 3';
 
-    action() {
-        return 1;
-    };
+export const wondersSelect = () => {
+    return Object.entries(wonders).map(wonder => ({value: wonder[0], label: wonder[1]}));
 }

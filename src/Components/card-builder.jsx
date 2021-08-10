@@ -2,14 +2,25 @@ import { Accordion, Button, ListGroup, Modal } from "react-bootstrap";
 import React, { useState } from "react";
 import { boardService } from "../Services/board.service";
 import QuantitySelector from "./shared/quantity-selector";
+import Select from 'react-select'
+import getWonderMap, { wonders, wondersSelect } from "../Cards/wonders.cards";
 
 export default function CardBuilder(props) {
     const [board, setBoard] = useState(props.board ?? boardService.get())
+
 
     const update = (value, boardItemKey, cardIndex) => {
         const map = board.get(boardItemKey);
         map.cards[cardIndex].quantity = value;
         setBoard(state => new Map(state).set(boardItemKey, map))
+    }
+
+
+    const WonderPicker = () => {
+        return (
+            <Select options={wondersSelect()}
+                    onChange={(option) => setBoard(state => getWonderMap(new Map(state), option.value))}/>
+        )
     }
 
     return (
@@ -27,8 +38,9 @@ export default function CardBuilder(props) {
                                 </Accordion.Header>
                                 <Accordion.Body>
                                     <ListGroup variant="flush">
+                                        {(boardItemKey === 'wonders') && <WonderPicker/>}
                                         {
-                                            board.get(boardItemKey).cards.map((card, cardIndex) => (
+                                            board?.get(boardItemKey).cards.map((card, cardIndex) => (
                                                 <ListGroup.Item key={cardIndex} className='d-flex'>
                                                     {card.item.name}
                                                     <div className='flex-grow-1'/>
@@ -39,7 +51,9 @@ export default function CardBuilder(props) {
                                                         </QuantitySelector>
                                                     }
                                                 </ListGroup.Item>
-                                            ))}
+                                            ))
+
+                                        }
                                     </ListGroup>
                                 </Accordion.Body>
                             </Accordion.Item>
