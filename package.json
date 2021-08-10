@@ -2,7 +2,7 @@
   "name": "game-scores",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://stevenlaughton.github.io/game-scores",
+  "homepage": "https://stevenlaughton.github.io/game-scores",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
