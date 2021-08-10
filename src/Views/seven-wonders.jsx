@@ -21,10 +21,6 @@ export default class SevenWonders extends React.Component {
         };
     }
 
-    componentDid() {
-        console.log('did mount')
-    }
-
     addPlayer = () => {
         const playerName = prompt("Please enter player name");
         if (playerName) {
