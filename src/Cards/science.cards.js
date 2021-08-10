@@ -1,30 +1,45 @@
 import { Card } from "../Models/card.model";
-import { scientificStructureTypes } from "../Models/scientific-structure-types.enum";
 
-export class Scriptorium implements Card {
+export class Tablet implements Card {
     name = 'Scriptorium';
-    type = scientificStructureTypes.tablet;
 
     action() {
         return 1;
     };
 }
 
-export class Workshop implements Card {
+export class Cog implements Card {
     name = 'Workshop';
-    type = scientificStructureTypes.cog;
 
     action() {
         return 1;
     };
 }
 
-export class Apothecary implements Card {
+export class Compass implements Card {
     name = 'Apothecary';
-    type = scientificStructureTypes.compass;
 
     action() {
         return 1;
     };
 }
 
+export default function getScienceMap(board) {
+    board.set('science', {
+        points: 0,
+        cards: [
+            {
+                item: new Tablet(),
+                quantity: 0,
+            },
+            {
+                item: new Cog(),
+                quantity: 0,
+            },
+            {
+                item: new Compass(),
+                quantity: 0,
+            }
+        ]
+    },);
+}

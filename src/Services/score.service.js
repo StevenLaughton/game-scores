@@ -1,6 +1,5 @@
 import Player from "../Models/player.model";
 import { CardWithQuantity } from "../Models/card-with-quantity.model";
-import { scientificStructureTypes } from "../Models/scientific-structure-types.enum";
 import { sum } from "../Helpers/array.helper";
 
 const calculateScore = (props: Player[]) => {
@@ -37,10 +36,8 @@ const calculateScore = (props: Player[]) => {
 }
 
 
-const calculateScientificStructures = (cards: []) => {
-    const byType = new Counter(cards, card => card.item.type);
-    const identicalSymbolPoints = sum(Object.values(scientificStructureTypes).map(scienceType => Math.pow(byType.get(scienceType), 2)));
-
+const calculateScientificStructures = (cards: CardWithQuantity[]) => {
+    const identicalSymbolPoints = sum(cards.map(card => Math.pow(card.quantity, 2)));
     const bonusCardPoints = Math.min(...cards.map(card => card.quantity)) * 7;
 
     return identicalSymbolPoints + bonusCardPoints;
@@ -52,19 +49,4 @@ const sumOfCardActionTimesQuantity = (cards: CardWithQuantity[], props = null) =
 
 export const scoreService = {
     calculate: (players: Player[]) => calculateScore(players)
-}
-
-class Counter extends Map {
-    constructor(iter, key = null) {
-        super();
-        this.key = key || (x => x);
-        for (let x of iter) {
-            this.add(x, x.quantity);
-        }
-    }
-
-    add(x, multiplier) {
-        x = this.key(x);
-        this.set(x, (((this.get(x) || 0)) + 1) * multiplier);
-    }
 }

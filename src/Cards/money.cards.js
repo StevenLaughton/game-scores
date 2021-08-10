@@ -16,3 +16,18 @@ export class Gold implements Card {
     };
 }
 
+export default function getMoneyMap(board) {
+    board.set('science', {
+        points: 0,
+        cards: [
+            {
+                item: new Silver(),
+                quantity: 0,
+            },
+            {
+                item: new Gold(),
+                quantity: 0,
+            },
+        ]
+    },);
+}

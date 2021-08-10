@@ -17,3 +17,18 @@ export class BattleLosses implements Card {
 }
 
 
+export default function getMilitaryMap(board) {
+    board.set('science', {
+        points: 0,
+        cards: [
+            {
+                item: new BattleWins(),
+                quantity: 0,
+            },
+            {
+                item: new BattleLosses(),
+                quantity: 0,
+            },
+        ]
+    },);
+}

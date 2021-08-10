@@ -1,4 +1,4 @@
-import { Apothecary, Scriptorium, Workshop } from "../Cards/science.cards";
+import { Compass, Tablet, Cog } from "../Cards/science.cards";
 import { Altar, Baths, Pawnshop, Theater } from "../Cards/civic.cards";
 
 const cards = {
@@ -6,9 +6,9 @@ const cards = {
     Baths,
     Altar,
     Theater,
-    Scriptorium,
-    Workshop,
-    Apothecary
+    Scriptorium: Tablet,
+    Workshop: Cog,
+    Apothecary: Compass
 };
 
 export default function cardFactory(name) {

@@ -1,8 +1,9 @@
 import Player from "../Models/player.model";
+import { sum } from "./array.helper";
 
 const numberOfMiscCards = (player, type) => {
     let count = 0;
-    player?.board.get('misc').cards.forEach(card => {
+    player.board?.get('misc').cards.forEach(card => {
         if (card.item.name === type) {
             count = card.quantity
         }
@@ -22,10 +23,10 @@ export const numberOfRedCards = (player: Player) => {
 }
 
 export const numberOfBattleLosses = (player: Player) => {
-    return player?.board.get('military').cards.filter(card => card.item.name === 'Battle Losses' && card.quantity > 0)?.length ?? 0
+    return player.board?.get('military').cards.filter(card => card.item.name === 'Battle Losses' && card.quantity > 0)?.length ?? 0
 }
 
 export const numberOfCards = (player: Player, type: string) => {
-    return player?.board.get(type).cards.filter(card => card.quantity > 0)?.length ?? 0
+    return sum(player.board?.get(type).cards.map(card => card.quantity) ?? [0]);
 }
 

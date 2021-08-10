@@ -9,6 +9,7 @@ export class Brown implements Card {
         throw new Error(errorMessage);
     }
 }
+
 export class Grey implements Card {
     name = 'Manufactured Goods'
 
@@ -16,10 +17,31 @@ export class Grey implements Card {
         throw new Error(errorMessage);
     }
 }
+
 export class Red implements Card {
     name = 'Military Structures'
 
     action = () => {
         throw new Error(errorMessage);
     }
+}
+
+export default function getCommerceMap(board) {
+    board.set('misc', {
+        points: 0,
+        cards: [
+            {
+                item: new Brown(),
+                quantity: 0,
+            },
+            {
+                item: new Grey(),
+                quantity: 0,
+            },
+            {
+                item: new Red(),
+                quantity: 0,
+            },
+        ]
+    },);
 }
