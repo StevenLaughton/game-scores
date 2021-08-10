@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Collapse } from "react-bootstrap";
+import { Card, Collapse, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons/faUserCircle";
 
@@ -12,13 +12,17 @@ export default function PlayerCard(props) {
                 <div className='d-flex align-items-center'>
                     <FontAwesomeIcon icon={faUserCircle} className="mx-1" onClick={() => setOpen(!open)}/>
                     <span>{props.name}</span>
-                    <div className='mx-1'>{props?.slotLeft}</div>
                     <div className='flex-grow-1'/>
-                    <div className='mx-1'>{props?.slotRight}</div>
+                    <Dropdown>
+                        <Dropdown.Toggle size="sm" variant="secondary"/>
+                        <Dropdown.Menu>
+                            {props.menu}
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </div>
             </Card.Header>
             <Collapse in={open}>
-                <Card.Body>
+                <Card.Body className="p-0">
                     {props.children}
                 </Card.Body>
             </Collapse>

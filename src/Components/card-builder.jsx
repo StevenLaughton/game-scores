@@ -15,10 +15,11 @@ export default function CardBuilder(props) {
     return (
         <Modal show={props.show} onHide={props.handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Board Builder</Modal.Title>
+                <Modal.Title>Scoreboard Builder</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className="p-0">
                 <Accordion>
+
                     {[...board.keys()].map((boardItemKey, boardIndex) => (
                             <Accordion.Item eventKey={boardIndex} key={boardIndex}>
                                 <Accordion.Header>
@@ -26,17 +27,19 @@ export default function CardBuilder(props) {
                                 </Accordion.Header>
                                 <Accordion.Body>
                                     <ListGroup variant="flush">
-                                        {board.get(boardItemKey).cards.map((card, cardIndex) => (
-                                            <ListGroup.Item key={cardIndex} className='d-flex'>
-                                                {card.item.name}
-                                                <div className='flex-grow-1'/>
-                                                <div>
-                                                    <QuantitySelector value={card.quantity}
-                                                                      min={0}
-                                                                      onChange={quantity => update(quantity, boardItemKey, cardIndex)}/>
-                                                </div>
-                                            </ListGroup.Item>
-                                        ))}
+                                        {
+                                            board.get(boardItemKey).cards.map((card, cardIndex) => (
+                                                <ListGroup.Item key={cardIndex} className='d-flex'>
+                                                    {card.item.name}
+                                                    <div className='flex-grow-1'/>
+                                                    {
+                                                        <QuantitySelector
+                                                            value={card.quantity}
+                                                            onChange={quantity => update(quantity, boardItemKey, cardIndex)}>
+                                                        </QuantitySelector>
+                                                    }
+                                                </ListGroup.Item>
+                                            ))}
                                     </ListGroup>
                                 </Accordion.Body>
                             </Accordion.Item>
