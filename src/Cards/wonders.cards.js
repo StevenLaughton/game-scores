@@ -1,7 +1,7 @@
 import { Card } from "../Models/card.model";
 
 export class GizaPhaseOne implements Card {
-    name = 'Phase 1';
+    name = 'Giza Phase 1';
 
     action() {
         return 1;
@@ -9,7 +9,7 @@ export class GizaPhaseOne implements Card {
 }
 
 export class GizaPhaseTwo implements Card {
-    name = 'Phase 2';
+    name = 'Giza Phase 2';
 
     action() {
         return 1;
@@ -17,7 +17,7 @@ export class GizaPhaseTwo implements Card {
 }
 
 export class GizaPhaseThree implements Card {
-    name = 'Phase 3';
+    name = 'Giza Phase 3';
 
     action() {
         return 1;

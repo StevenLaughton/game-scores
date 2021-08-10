@@ -34,8 +34,9 @@ export default function ScoreTable(props) {
                 [...props.board.keys()].map((key, index) => {
                     return (
                         <Accordion.Item eventKey={index} key={index}>
-                            <Accordion.Header>{key}
+                            <Accordion.Header>
                                 <Badge bg="success" className="mx-2" pill> {props.board.get(key).points}</Badge>
+                                {key}
                             </Accordion.Header>
                             <Accordion.Body>
                                 <Body index={key} board={props.board}/>

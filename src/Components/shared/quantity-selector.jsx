@@ -4,34 +4,36 @@ export default function QuantitySelector(props) {
     const min = props?.min ?? 0;
     const max = props?.max ?? Number.MAX_VALUE;
 
-    const [quantity, setQuantity] = useState(props.quantity);
+    const [value, setValue] = useState(props.value);
 
     const decrement = () => {
-        if (quantity > min) {
-            setQuantityInternal(quantity - 1)
+        if (value > min) {
+            setQuantityInternal(value - 1)
         }
     }
 
     const increment = () => {
-        if (quantity < max) {
-            setQuantityInternal(quantity + 1)
+        if (value < max) {
+            setQuantityInternal(value + 1)
         }
     }
 
 
     const setQuantityInternal = (value) => {
         props.onChange(value);
-        setQuantity(value);
+        setValue(value);
     }
 
     return (
         <div className="quantity-input">
             <button className="quantity-input__modifier quantity-input__modifier--left"
+                    type='button'
                     onClick={decrement}>
                 &mdash;
             </button>
-            <input className="quantity-input__screen" type="text" value={quantity} readOnly/>
+            <input className="quantity-input__screen" type="text" value={value} readOnly/>
             <button className="quantity-input__modifier quantity-input__modifier--right"
+                    type='button'
                     onClick={increment}>
                 &#xff0b;
             </button>

@@ -9,7 +9,7 @@ export class Pawnshop implements Card {
 }
 
 export class Baths implements Card {
-    name = 'Pawnshop';
+    name = 'Baths';
 
     action() {
         return 3;

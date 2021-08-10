@@ -1,10 +1,11 @@
 import { Gold, Silver } from "../Cards/money.cards";
 import { BattleLosses, BattleWins } from "../Cards/military.cards";
 import { GizaPhaseOne, GizaPhaseThree, GizaPhaseTwo } from "../Cards/wonders.cards";
-import { Pawnshop } from "../Cards/civic.cards";
+import { Altar, Baths, Pawnshop, Theater } from "../Cards/civic.cards";
 import { Apothecary, Scriptorium, Workshop } from "../Cards/science.cards";
-import { Vineyard } from "../Cards/commerce.cards";
-import { LumberYard } from "../Cards/material.cards";
+import { Marketplace, Vineyard } from "../Cards/commerce.cards";
+import { Brown, Grey, Red } from "../Cards/misc.cards";
+import getGuildsMap from "../Cards/guild.cards";
 
 const getBoard = () => {
     const boardMap = new Map();
@@ -13,11 +14,11 @@ const getBoard = () => {
         cards: [
             {
                 item: new BattleWins(),
-                quantity: 1,
+                quantity: 0,
             },
             {
                 item: new BattleLosses(),
-                quantity: 1,
+                quantity: 0
             }
         ]
     })
@@ -26,11 +27,11 @@ const getBoard = () => {
         cards: [
             {
                 item: new Silver(),
-                quantity: 1,
+                quantity: 0,
             },
             {
                 item: new Gold(),
-                quantity: 1,
+                quantity: 0,
             }
         ]
     });
@@ -39,15 +40,15 @@ const getBoard = () => {
         cards: [
             {
                 item: new GizaPhaseOne(),
-                quantity: 1,
+                quantity: 0,
             },
             {
                 item: new GizaPhaseTwo(),
-                quantity: 1,
+                quantity: 0,
             },
             {
                 item: new GizaPhaseThree(),
-                quantity: 1,
+                quantity: 0,
             }
         ]
     });
@@ -56,8 +57,21 @@ const getBoard = () => {
         cards: [
             {
                 item: new Pawnshop(),
-                quantity: 1,
-            }
+                quantity: 0,
+            },
+            {
+                item: new Baths(),
+                quantity: 0,
+            },
+            {
+                item: new Altar(),
+                quantity: 0,
+            },
+            {
+                item: new Theater(),
+                quantity: 0,
+            },
+
         ]
     },);
     boardMap.set('science', {
@@ -65,15 +79,15 @@ const getBoard = () => {
         cards: [
             {
                 item: new Scriptorium(),
-                quantity: 3,
+                quantity: 0,
             },
             {
                 item: new Workshop(),
-                quantity: 2,
+                quantity: 0,
             },
             {
                 item: new Apothecary(),
-                quantity: 1,
+                quantity: 0,
             }
         ]
     },);
@@ -82,17 +96,30 @@ const getBoard = () => {
         cards: [
             {
                 item: new Vineyard(),
-                quantity: 1,
-            }
+                quantity: 0,
+            },
+            {
+                item: new Marketplace(),
+                quantity: 0,
+            },
         ]
     });
-    boardMap.set('material', {
+    getGuildsMap(boardMap)
+    boardMap.set('misc', {
         points: 0,
         cards: [
             {
-                item: new LumberYard(),
-                quantity: 1,
-            }
+                item: new Brown(),
+                quantity: 0,
+            },
+            {
+                item: new Grey(),
+                quantity: 0,
+            },
+            {
+                item: new Red(),
+                quantity: 0,
+            },
         ]
     });
 

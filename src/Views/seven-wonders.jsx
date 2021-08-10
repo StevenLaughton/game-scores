@@ -19,8 +19,13 @@ export default class SevenWonders extends React.Component {
                 new Player('charlotte'),
             ],
             modalOpen: false,
-            modalPlayer: null
+            modalPlayer: null,
+            playerIndex: null
         };
+    }
+
+    componentDidMount() {
+        console.log('did mount')
     }
 
     addPlayer = () => {
@@ -33,7 +38,7 @@ export default class SevenWonders extends React.Component {
     }
 
     updatePlayer = (player, index) => {
-        const statePlayers = this.state.players;
+        const statePlayers = this.state.players.slice();
         statePlayers[index] = player;
         this.setState({players: statePlayers});
     }
@@ -42,22 +47,31 @@ export default class SevenWonders extends React.Component {
         this.setState((state) => update(state, {players: {$splice: [[index, 1]]}}));
     };
 
-    calculateScore = () => {
-        const players = scoreService.calculate(this.state.players);
+    calculateScores = () => {
+        const players = scoreService.calculate(this.state.players.slice());
         this.setState({players: players});
     };
 
-    openModal = (player: Player) => {
-        this.setState({modalOpen: true, modalPlayer: player})
+    openModal = (player, playerIndex) => {
+        this.setState({modalOpen: true, modalPlayer: player, playerIndex: playerIndex})
     }
 
-    handleModalClose = () => {
+    closeModal = () => {
         this.setState({modalOpen: false, modalPlayer: null})
     }
 
-    handleModalSave = (player, index) => {
+    saveModal = (board) => {
+        const index = this.state.playerIndex;
+        const player = this.state.players[index]
+        player.board = board;
         this.updatePlayer(player, index);
-        this.handleModalClose();
+        this.closeModal();
+    }
+
+    getPoints = (player) => {
+        return player.board
+            ? ([...player.board.values()].reduce((acc, val) => acc + val.points, 0))
+            : 0;
     }
 
     render() {
@@ -66,7 +80,7 @@ export default class SevenWonders extends React.Component {
                 <h1 className="m-3">7-Wonders</h1>
                 <Container>
                     <div className="d-grid gap-2">
-                        <Button variant="primary" size="lg" onClick={() => this.calculateScore()}>
+                        <Button variant="primary" size="lg" onClick={() => this.calculateScores()}>
                             Calculate
                         </Button>
                     </div>
@@ -75,14 +89,13 @@ export default class SevenWonders extends React.Component {
                             this.state.players.map((player, index) => {
                                 return (
                                     <Col xs={12} sm={6} key={index}>
-                                        <PlayerCard player={player}
-                                                    index={index}
+                                        <PlayerCard name={player.name}
+                                                    points={this.getPoints(player)}
                                                     slotLeft={
                                                         <FontAwesomeIcon icon={faPlus}
-                                                                         onClick={() => this.openModal(player)}/>
+                                                                         onClick={() => this.openModal(player, index)}/>
                                                     }
-                                                    slotRight={<CloseButton onClick={() => this.removePlayer(index)}/>}
-                                                    updateHandler={this.updatePlayer.bind(this)}>
+                                                    slotRight={<CloseButton onClick={() => this.removePlayer(index)}/>}>
                                             {player.board && <ScoreTable board={player.board}/>}
                                         </PlayerCard>
                                     </Col>
@@ -96,9 +109,9 @@ export default class SevenWonders extends React.Component {
                 </Container>
                 {
                     this.state.modalPlayer && <CardBuilder show={this.state.modalOpen}
-                                                           handleClose={this.handleModalClose}
-                                                           handleSave={this.handleModalSave}
-                                                           player={this.state.modalPlayer}/>}
+                                                           handleClose={this.closeModal}
+                                                           handleSave={this.saveModal}
+                                                           board={this.state.modalPlayer.board}/>}
             </div>
         )
     }

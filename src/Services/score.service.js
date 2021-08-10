@@ -4,7 +4,7 @@ import { scientificStructureTypes } from "../Models/scientific-structure-types.e
 import { sum } from "../Helpers/array.helper";
 
 const calculateScore = (props: Player[]) => {
-    const players = [...props];
+    const players = props;
 
     players.forEach((player, index) => {
         player.board && player.board.forEach((boardItem, key) => {
@@ -21,6 +21,7 @@ const calculateScore = (props: Player[]) => {
                     points = calculateScientificStructures(boardItem.cards);
                     break;
                 case 'commerce':
+                case 'guild':
                     points = sumOfCardActionTimesQuantity(boardItem.cards, {players: players, index: index});
                     break;
                 default:
@@ -31,7 +32,6 @@ const calculateScore = (props: Player[]) => {
             })
         })
     });
-
 
     return players;
 }
@@ -48,7 +48,7 @@ const calculateScientificStructures = (cards: []) => {
 
 
 const sumOfCardActionTimesQuantity = (cards: CardWithQuantity[], props = null) =>
-    sum(cards.map(card => card.item.action(props) * card.quantity));
+    sum(cards.map(card => card.quantity === 0 ? 0 : card.item.action(props) * card.quantity));
 
 export const scoreService = {
     calculate: (players: Player[]) => calculateScore(players)
