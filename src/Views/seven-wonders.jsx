@@ -68,10 +68,11 @@ export default class SevenWonders extends React.Component {
     dropdownMenu = (index) => {
         return (
             <>
-                <Dropdown.Item as="button" onClick={() => this.openModal(index)}>
+                <Dropdown.Item eventKey="1" as="button" onClick={() => this.openModal(index)}>
                     Add/Edit Scoreboard
                 </Dropdown.Item>
-                <Dropdown.Item as="button" onClick={() => this.removePlayer(index)}>
+                <Dropdown.Divider/>
+                <Dropdown.Item eventKey="2" as="button" onClick={() => this.removePlayer(index)}>
                     Delete Player
                 </Dropdown.Item>
             </>

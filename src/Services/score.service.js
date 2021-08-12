@@ -11,6 +11,7 @@ const calculateScore = (props: Player[]) => {
             switch (key) {
                 case 'military':
                 case 'civic':
+                case 'wonders':
                     points = sumOfCardActionTimesQuantity(boardItem.cards);
                     break;
                 case 'money':
@@ -25,10 +26,8 @@ const calculateScore = (props: Player[]) => {
                     break;
                 default:
             }
-            player.board.set(key, {
-                points: points,
-                cards: boardItem.cards
-            })
+
+            player.board.set(key, Object.assign(boardItem, {points: points}))
         })
     });
 

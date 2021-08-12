@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Collapse, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons/faUserCircle";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function PlayerCard(props) {
     const [open, setOpen] = useState(true);
@@ -10,15 +10,20 @@ export default function PlayerCard(props) {
         <Card bg='light' border="light" className="app-card">
             <Card.Header>
                 <div className='d-flex align-items-center'>
-                    <FontAwesomeIcon icon={faUserCircle} className="mx-1" onClick={() => setOpen(!open)}/>
-                    <span>{props.name}</span>
-                    <div className='flex-grow-1'/>
-                    <Dropdown>
-                        <Dropdown.Toggle size="sm" variant="secondary"/>
+                    <Dropdown className='mx-1'>
+                        <Dropdown.Toggle size="sm" />
                         <Dropdown.Menu>
                             {props.menu}
                         </Dropdown.Menu>
                     </Dropdown>
+
+                    <span>{props.name}</span>
+                    <div className='flex-grow-1'/>
+                    <div className={open ? "isRotated" : ""}>
+                        <FontAwesomeIcon icon={faChevronLeft}
+                                         className="mx-1"
+                                         onClick={() => setOpen(!open)}/>
+                    </div>
                 </div>
             </Card.Header>
             <Collapse in={open}>

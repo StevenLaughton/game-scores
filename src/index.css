@@ -62,4 +62,7 @@ code {
     text-align: center;
 }
 
+.isRotated svg {
+    transform: rotate(-90deg);
+}
 

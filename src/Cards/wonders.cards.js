@@ -1,54 +1,30 @@
 import { Card } from "../Models/card.model";
 
-export class APhaseOne implements Card {
-    constructor(wonder: wonders) {
+export class Wonder implements Card {
+    constructor(wonder: wonders, val: number) {
         this.name = `${wonder} Phase One`
+        this.action = () => val;
     }
-
-    action() {
-        return 3;
-    };
 }
 
-export class APhaseTwo implements Card {
-    constructor(wonder: wonders) {
-        this.name = `${wonder} Phase Two`
-    }
 
-    action() {
-        return 0;
-    };
-}
+export function getWonder(board, wonder) {
 
-export class APhaseThree implements Card {
-    constructor(wonder: wonders) {
-        this.name = `${wonder} Phase Three`
-    }
+    let points;
 
-    action() {
-        return 7;
+    points = wonder === wonders.Giza
+        ? [3, 5, 7]
+        : [3, 0, 7]
+
+    return {
+        points: 0,
+        option: wonder ?? wonders.Rhodes,
+        cards: points.map(val => ({item: new Wonder(wonder, val), quantity: 0}))
     };
 }
 
 export default function getWonderMap(board, wonder) {
-    board.set('wonders', {
-        points: 0,
-        cards: [
-            {
-                item: new APhaseOne(wonder),
-                quantity: 0,
-            },
-            {
-                item: new APhaseTwo(wonder),
-                quantity: 0,
-            },
-            {
-                item: new APhaseThree(wonder),
-                quantity: 0,
-            },
-        ]
-    });
-    return board;
+    board.set('wonders', getWonder(board, wonder));
 }
 
 export const wonders = {

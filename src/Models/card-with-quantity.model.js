@@ -4,3 +4,4 @@ export class CardWithQuantity {
     item: Card;
     quantity: number;
 }
+
