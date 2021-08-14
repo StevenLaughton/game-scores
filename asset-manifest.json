@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/game-scores/static/css/main.bf018263.chunk.css",
-    "main.js": "/game-scores/static/js/main.2f3fef76.chunk.js",
-    "main.js.map": "/game-scores/static/js/main.2f3fef76.chunk.js.map",
+    "main.js": "/game-scores/static/js/main.2a01b7da.chunk.js",
+    "main.js.map": "/game-scores/static/js/main.2a01b7da.chunk.js.map",
     "runtime-main.js": "/game-scores/static/js/runtime-main.8b05dd28.js",
     "runtime-main.js.map": "/game-scores/static/js/runtime-main.8b05dd28.js.map",
-    "static/js/2.1bb88808.chunk.js": "/game-scores/static/js/2.1bb88808.chunk.js",
-    "static/js/2.1bb88808.chunk.js.map": "/game-scores/static/js/2.1bb88808.chunk.js.map",
+    "static/js/2.b693e6df.chunk.js": "/game-scores/static/js/2.b693e6df.chunk.js",
+    "static/js/2.b693e6df.chunk.js.map": "/game-scores/static/js/2.b693e6df.chunk.js.map",
     "index.html": "/game-scores/index.html",
     "static/css/main.bf018263.chunk.css.map": "/game-scores/static/css/main.bf018263.chunk.css.map",
-    "static/js/2.1bb88808.chunk.js.LICENSE.txt": "/game-scores/static/js/2.1bb88808.chunk.js.LICENSE.txt"
+    "static/js/2.b693e6df.chunk.js.LICENSE.txt": "/game-scores/static/js/2.b693e6df.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8b05dd28.js",
-    "static/js/2.1bb88808.chunk.js",
+    "static/js/2.b693e6df.chunk.js",
     "static/css/main.bf018263.chunk.css",
-    "static/js/main.2f3fef76.chunk.js"
+    "static/js/main.2a01b7da.chunk.js"
   ]
 }
