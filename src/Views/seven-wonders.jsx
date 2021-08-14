@@ -1,4 +1,4 @@
-import { Col, Container, Dropdown, Row } from "react-bootstrap";
+import { Container, Dropdown } from "react-bootstrap";
 import PlayerCard from "../Components/player-card";
 import React from "react";
 import update from 'immutability-helper';
@@ -7,6 +7,20 @@ import { scoreService } from "../Services/score.service";
 import AddPlayerCard from "../Components/add-player-card";
 import CardBuilder from "../Components/card-builder";
 import PlayerScoreboard from "../Components/player-scoreboard";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+    userSelect: "none",
+    ...draggableStyle
+});
+
+const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+};
 
 export default class SevenWonders extends React.Component {
     constructor(props) {
@@ -19,6 +33,8 @@ export default class SevenWonders extends React.Component {
             modalOpen: false,
             modalIndex: null
         };
+
+        this.onDragEnd = this.onDragEnd.bind(this);
     }
 
     addPlayer = () => {
@@ -79,25 +95,52 @@ export default class SevenWonders extends React.Component {
         )
     }
 
+    onDragEnd(result) {
+        if (!result.destination) {
+            return;
+        }
+
+        const players = reorder(
+            this.state.players,
+            result.source.index,
+            result.destination.index
+        );
+
+        this.setState({players: players});
+    }
+
     render() {
         return (
             <div>
                 <h1 className="m-3">7-Wonders</h1>
                 <Container>
-                    <Row>
-                        {this.state.players.map((player, index) => (
-                            <Col xs={12} sm={6} key={index}>
-                                <PlayerCard name={player.name}
-                                            points={this.getPoints(player)}
-                                            menu={this.dropdownMenu(index)}>
-                                    {player.board && <PlayerScoreboard board={player.board}/>}
-                                </PlayerCard>
-                            </Col>
-                        ))}
-                        <Col xs={12} md={6}>
-                            <AddPlayerCard onClick={this.addPlayer}/>
-                        </Col>
-                    </Row>
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        <Droppable droppableId="droppable">
+                            {provided => (
+                                <div {...provided.droppableProps}
+                                     ref={provided.innerRef}>
+                                    {this.state.players.map((player, index) => (
+                                        <Draggable key={player.name} draggableId={player.name} index={index}>
+                                            {(provided, snapshot) => (
+                                                <div ref={provided.innerRef}
+                                                     {...provided.draggableProps}
+                                                     {...provided.dragHandleProps}
+                                                     className="mb-3"
+                                                     style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}>
+                                                    <PlayerCard name={player.name}
+                                                                points={this.getPoints(player)}
+                                                                menu={this.dropdownMenu(index)}>
+                                                        {player.board && <PlayerScoreboard board={player.board}/>}
+                                                    </PlayerCard>
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </div>)}
+                        </Droppable>
+                    </DragDropContext>
+                    <AddPlayerCard onClick={this.addPlayer}/>
                 </Container>
                 {this.state.modalIndex !== null
                 && <CardBuilder show={this.state.modalOpen}

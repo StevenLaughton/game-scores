@@ -7,7 +7,7 @@ export default function PlayerCard(props) {
     const [open, setOpen] = useState(true);
 
     return (
-        <Card bg='light' border="light" className="app-card">
+        <Card bg='light' border="light">
             <Card.Header>
                 <div className='d-flex align-items-center'>
                     <Dropdown className='mx-1'>
