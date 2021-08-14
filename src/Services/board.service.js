@@ -9,7 +9,7 @@ import getGuildsMap from "../Cards/guild.cards";
 
 const getBoard = () => {
     const boardMap = new Map();
-    getWonderMap(boardMap, wonders.Rhodes)
+    getWonderMap(boardMap)
     getMilitaryMap(boardMap)
     getMoneyMap(boardMap)
     getCivicMap(boardMap)

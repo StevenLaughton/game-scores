@@ -1,10 +1,11 @@
-import { Accordion, Button, Form, ListGroup, Modal } from "react-bootstrap";
+import { Accordion, Button, Form, ListGroup, Modal, Row } from "react-bootstrap";
 import React from "react";
 import { boardService } from "../Services/board.service";
 import QuantitySelector from "./shared/quantity-selector";
 import Select from 'react-select'
 import { getWonder, wondersSelect } from "../Cards/wonders.cards";
 import useMap from "../Hooks/map.hook";
+import Toggle from 'react-toggle';
 
 export default function CardBuilder(props) {
     const [board, {set}] = useMap(props.board ?? boardService.get())
@@ -18,11 +19,19 @@ export default function CardBuilder(props) {
     const WonderPicker = () => {
         return (
             <>
-                <Select options={wondersSelect()}
-                        value={{label: board.get('wonders').option}}
-                        isSearchable={false}
-                        onChange={option => set('wonders', getWonder(board, option.value))}>
-                </Select>
+                <Row>
+                    <Select options={wondersSelect()}
+                            value={{label: board.get('wonders').option}}
+                            isSearchable={false}
+                            onChange={option => set('wonders', getWonder(board, option.value))}>
+                    </Select>
+                    <label>
+                        <Toggle defaultChecked={board.get('wonders').sideA}
+                                icons={false}
+                                onChange={val => set('wonders', getWonder(board, null, val.target.checked))}/>
+                        <span>Side {board.get('wonders').sideA ? 'A' : 'B'}</span>
+                    </label>
+                </Row>
                 <div className="my-2">
                     {board?.get('wonders').cards.map((card, cardIndex) => (
                         <Form.Check key={cardIndex}
@@ -34,6 +43,7 @@ export default function CardBuilder(props) {
                         </Form.Check>
                     ))}
                 </div>
+
             </>
         )
     }

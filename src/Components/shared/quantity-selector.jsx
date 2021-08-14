@@ -2,14 +2,14 @@ import { useCounter } from "react-use";
 import { useEffect } from "react";
 
 export default function QuantitySelector(props) {
-    const min = props?.min ?? 0;
-    const max = props?.max ?? Number.MAX_VALUE;
+    const min = 0;
+    const max = Number.MAX_VALUE;
     const [current, {inc, dec}] = useCounter(props.value, max, min);
 
     useEffect(() => {
         props.onChange(current)
     }, [current]);
-    
+
     return (
         <div className="quantity-input">
             <button className="quantity-input__modifier quantity-input__modifier--left"
