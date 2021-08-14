@@ -7,20 +7,8 @@ import { scoreService } from "../Services/score.service";
 import AddPlayerCard from "../Components/add-player-card";
 import CardBuilder from "../Components/card-builder";
 import PlayerScoreboard from "../Components/player-scoreboard";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-    userSelect: "none",
-    ...draggableStyle
-});
-
-const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    return result;
-};
+import DragDrop from "../Components/shared/drag-drop";
+import { reorder } from "../Helpers/array.helper";
 
 export default class SevenWonders extends React.Component {
     constructor(props) {
@@ -99,47 +87,27 @@ export default class SevenWonders extends React.Component {
         if (!result.destination) {
             return;
         }
-
-        const players = reorder(
-            this.state.players,
-            result.source.index,
-            result.destination.index
-        );
+        const players = reorder(this.state.players, result.source.index, result.destination.index);
 
         this.setState({players: players});
     }
 
     render() {
         return (
-            <div>
+            <>
                 <h1 className="m-3">7-Wonders</h1>
                 <Container>
-                    <DragDropContext onDragEnd={this.onDragEnd}>
-                        <Droppable droppableId="droppable">
-                            {provided => (
-                                <div {...provided.droppableProps}
-                                     ref={provided.innerRef}>
-                                    {this.state.players.map((player, index) => (
-                                        <Draggable key={player.name} draggableId={player.name} index={index}>
-                                            {(provided, snapshot) => (
-                                                <div ref={provided.innerRef}
-                                                     {...provided.draggableProps}
-                                                     {...provided.dragHandleProps}
-                                                     className="mb-3"
-                                                     style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}>
-                                                    <PlayerCard name={player.name}
-                                                                points={this.getPoints(player)}
-                                                                menu={this.dropdownMenu(index)}>
-                                                        {player.board && <PlayerScoreboard board={player.board}/>}
-                                                    </PlayerCard>
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>)}
-                        </Droppable>
-                    </DragDropContext>
+                    <DragDrop onDragEnd={this.onDragEnd}>
+                        {this.state.players.map((player, index) => (
+                            <DragDrop.Drag key={index} name={player.name} index={index}>
+                                <PlayerCard name={player.name}
+                                            points={this.getPoints(player)}
+                                            menu={this.dropdownMenu(index)}>
+                                    {player.board && <PlayerScoreboard board={player.board}/>}
+                                </PlayerCard>
+                            </DragDrop.Drag>
+                        ))}
+                    </DragDrop>
                     <AddPlayerCard onClick={this.addPlayer}/>
                 </Container>
                 {this.state.modalIndex !== null
@@ -148,7 +116,7 @@ export default class SevenWonders extends React.Component {
                                 handleSave={this.saveModal.bind(this)}
                                 board={this.state.players[this.state.modalIndex].board}/>
                 }
-            </div>
+            </>
         )
     }
 }
