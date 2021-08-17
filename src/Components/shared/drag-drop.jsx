@@ -17,6 +17,7 @@ const DragDrop = (props) => (<DragDropContext onDragEnd={props.onDragEnd}>
             </div>)}
     </Droppable>
 </DragDropContext>)
+
 const Drag = (props) => (<Draggable key={props.name} draggableId={props.name} index={props.index}>
     {(provided, snapshot) => (
         <div ref={provided.innerRef}
