@@ -100,7 +100,7 @@ export default class SevenWonders extends React.Component {
                     <DragDrop onDragEnd={this.onDragEnd}>
                         {this.state.players.map((player, index) => (
                             <DragDrop.Drag key={index} name={player.name} index={index}>
-                                <PlayerCard name={player.name}
+                                <PlayerCard key={index} name={player.name}
                                             points={this.getPoints(player)}
                                             menu={this.dropdownMenu(index)}>
                                     {player.board && <PlayerScoreboard board={player.board}/>}

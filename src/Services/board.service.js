@@ -1,6 +1,6 @@
 import getMoneyMap from "../Cards/money.cards";
 import getMilitaryMap from "../Cards/military.cards";
-import getWonderMap, { wonders } from "../Cards/wonders.cards";
+import getWonderMap from "../Cards/wonders.cards";
 import getCivicMap from "../Cards/civic.cards";
 import getScienceMap from "../Cards/science.cards";
 import getCommerceMap from "../Cards/commerce.cards";

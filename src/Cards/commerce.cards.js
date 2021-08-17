@@ -26,6 +26,14 @@ export class ChamberOfCommerce implements Card {
     }
 }
 
+export class Arena implements Card {
+    name = 'Arena';
+
+    action = (props) => {
+        return numberOfCards(props.players[props.index], 'wonders');
+    }
+}
+
 export class YellowOther implements Card {
     name = 'Other';
 

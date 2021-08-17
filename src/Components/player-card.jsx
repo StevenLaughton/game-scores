@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function PlayerCard(props) {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     return (
         <Card bg='light' border="light">
             <Card.Header>
                 <div className='d-flex align-items-center'>
                     <Dropdown className='mx-1'>
-                        <Dropdown.Toggle size="sm" />
+                        <Dropdown.Toggle size="sm"/>
                         <Dropdown.Menu>
                             {props.menu}
                         </Dropdown.Menu>

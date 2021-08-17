@@ -7,7 +7,6 @@ export class Wonder implements Card {
     }
 }
 
-
 export function getWonder(board, wonder, side) {
     let points;
     const current = board?.get('wonders');
@@ -40,6 +39,9 @@ export function getWonder(board, wonder, side) {
                 break;
             case wonders.Giza:
                 points = [3, 5, 5, 7];
+                break;
+            default:
+                points = [0,0,0]
                 break;
         }
     }

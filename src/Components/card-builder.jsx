@@ -5,7 +5,7 @@ import QuantitySelector from "./shared/quantity-selector";
 import Select from 'react-select'
 import { getWonder, wondersSelect } from "../Cards/wonders.cards";
 import useMap from "../Hooks/map.hook";
-import Toggle from 'react-toggle';
+import { FormControlLabel, Switch } from "@material-ui/core";
 
 export default function CardBuilder(props) {
     const [board, {set}] = useMap(props.board ?? boardService.get())
@@ -25,12 +25,12 @@ export default function CardBuilder(props) {
                             isSearchable={false}
                             onChange={option => set('wonders', getWonder(board, option.value))}>
                     </Select>
-                    <label>
-                        <Toggle defaultChecked={board.get('wonders').sideA}
-                                icons={false}
-                                onChange={val => set('wonders', getWonder(board, null, val.target.checked))}/>
-                        <span>Side {board.get('wonders').sideA ? 'A' : 'B'}</span>
-                    </label>
+                    <FormControlLabel
+                        label={`Side ${board.get('wonders').sideA ? 'A' : 'B'}`}
+                        control={
+                            <Switch checked={board.get('wonders').sideA}
+                                    onChange={val => set('wonders', getWonder(board, null, val.target.checked))}/>
+                        }/>
                 </Row>
                 <div className="my-2">
                     {board?.get('wonders').cards.map((card, cardIndex) => (
