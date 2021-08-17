@@ -59,6 +59,10 @@ export default function getCommerceMap(board) {
                 quantity: 0,
             },
             {
+                item: new Arena(),
+                quantity: 0,
+            },
+            {
                 item: new YellowOther(),
                 quantity: 0,
             },
