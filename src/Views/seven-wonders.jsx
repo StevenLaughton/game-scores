@@ -1,6 +1,6 @@
 import { Container, Dropdown } from "react-bootstrap";
 import PlayerCard from "../Components/player-card";
-import React, { useState } from "react";
+import React from "react";
 import Player from "../Models/player.model";
 import AddPlayerCard from "../Components/add-player-card";
 import CardBuilder from "../Components/card-builder";
@@ -9,17 +9,15 @@ import DragDrop from "../Components/shared/drag-drop";
 import { reorder } from "../Helpers/array.helper";
 import { useDeepCompareEffect, useList } from "react-use";
 import { scoreService } from "../Services/score.service";
+import useModal from "../Hooks/modal.hook";
 
-export default function SevenWonders(props) {
+export default function SevenWonders() {
     const initialPlayers = [new Player('steven'), new Player('charlotte')];
 
     const [players, {set, push, updateAt, removeAt}] = useList(initialPlayers);
-
-    const [modal, setModal] = useState({open: false, index: null})
-
+    const [modal, {openModal, closeModal}] = useModal(false)
 
     useDeepCompareEffect(() => {
-        console.log('update')
         set(scoreService.calculate(players.slice()));
     }, [players, modal]);
 
@@ -29,14 +27,6 @@ export default function SevenWonders(props) {
         if (playerName) {
             push(new Player(playerName));
         }
-    }
-
-    const openModal = (index) => {
-        setModal({open: true, index: index})
-    }
-
-    const closeModal = () => {
-        setModal({open: false, index: null})
     }
 
     const saveModal = (board) => {
@@ -62,7 +52,7 @@ export default function SevenWonders(props) {
     const dropdownMenu = (index) => {
         return (
             <>
-                <Dropdown.Item eventKey="1" as="button" onClick={() => openModal(index)}>
+                <Dropdown.Item eventKey="1" as="button" onClick={() => openModal({index: index})}>
                     Add/Edit Scoreboard
                 </Dropdown.Item>
                 <Dropdown.Divider/>
@@ -90,11 +80,10 @@ export default function SevenWonders(props) {
                 </DragDrop>
                 <AddPlayerCard onClick={addPlayer}/>
             </Container>
-            {modal.index !== null
-            && <CardBuilder show={modal.open}
-                            handleClose={closeModal}
-                            handleSave={saveModal}
-                            board={players[modal.index].board}/>
+            {modal.open && <CardBuilder show={modal.open}
+                                        handleClose={closeModal}
+                                        handleSave={saveModal}
+                                        board={players[modal.index]?.board}/>
             }
         </>
     )
